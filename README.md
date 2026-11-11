@@ -2,6 +2,8 @@
 
 A full-stack calculator: a **Go** REST API that evaluates arithmetic, and a **React + TypeScript** frontend built around a command bar. You type a whole expression, such as `2 * (3 + 4) ^ 2`, and the result appears as you type.
 
+**Live demo:** <https://calculator.emersonic.dev>
+
 ![The calculator showing the result of an expression, with the history on the left](docs/screenshots/calculator-dark.png)
 
 | Syntax errors point at the exact character                                                             | Action panel                                                                               | Mobile                                                                            |
@@ -307,6 +309,7 @@ The component tests drive the real UI with simulated typing, clicks and shortcut
 
 - **One image.** The Go server serves the compiled frontend, so there is one process, one port and no CORS in production. The final image is distroless and runs as a non-root user.
 - **Caching.** Files under `/assets/` have a content hash in their name and are cached indefinitely; `index.html` is always revalidated.
+- **Live demo.** The same image runs on a VPS at <https://calculator.emersonic.dev>. The container publishes no ports; an Nginx reverse proxy on the same Docker network terminates TLS (Let's Encrypt) and forwards requests to it.
 
 ## Assumptions and limitations
 
