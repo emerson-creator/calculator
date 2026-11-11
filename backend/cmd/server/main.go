@@ -7,6 +7,9 @@
 //	                      call the API (default "http://localhost:5173", the
 //	                      Vite dev server). Set it to an empty string to
 //	                      disable CORS.
+//	STATIC_DIR            directory with the compiled frontend. When set, the
+//	                      server also serves the web application (this is how
+//	                      the Docker image runs). Unset by default.
 package main
 
 import (
@@ -41,10 +44,11 @@ func main() {
 func run(logger *slog.Logger) error {
 	port := envOr("PORT", defaultPort)
 	origins := splitAndTrim(envOr("CORS_ALLOWED_ORIGINS", defaultAllowedOrigins))
+	staticDir := os.Getenv("STATIC_DIR")
 
 	srv := &http.Server{
 		Addr:    ":" + port,
-		Handler: api.NewRouter(logger, api.Config{AllowedOrigins: origins}),
+		Handler: api.NewRouter(logger, api.Config{AllowedOrigins: origins, StaticDir: staticDir}),
 		// Timeouts protect the server from slow or stalled clients.
 		ReadHeaderTimeout: 5 * time.Second,
 		ReadTimeout:       10 * time.Second,
@@ -58,7 +62,8 @@ func run(logger *slog.Logger) error {
 
 	serverErr := make(chan error, 1)
 	go func() {
-		logger.Info("server listening", "addr", srv.Addr, "cors_allowed_origins", origins)
+		logger.Info("server listening",
+			"addr", srv.Addr, "cors_allowed_origins", origins, "static_dir", staticDir)
 		serverErr <- srv.ListenAndServe()
 	}()
 

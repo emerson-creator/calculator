@@ -12,6 +12,8 @@ node_modules/
 dist/
 .vite/
 *.tsbuildinfo
+frontend/dist/
+frontend/coverage/
 
 # Environment variables and secrets
 .env
@@ -32,3 +34,8 @@ Desktop.ini
 # Logs
 *.log
 npm-debug.log*
+
+# Local
+.DS_Store
+.vscode/*
+!.vscode/extensions.json

@@ -1,0 +1,11 @@
+# Keep the build context small and never copy local artifacts into the image.
+.git
+.github
+**/node_modules
+**/dist
+**/coverage
+**/*.out
+**/bin
+**/.env*
+**/*.log
+*.md
