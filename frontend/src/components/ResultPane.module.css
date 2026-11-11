@@ -1,0 +1,182 @@
+.pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 132px;
+  padding: 18px 20px 16px;
+  transition: opacity var(--dur-base);
+}
+
+.pane[data-stale] {
+  opacity: 0.55;
+}
+
+.expression {
+  margin: 0 0 6px;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+/* Result */
+
+.result {
+  animation: rise var(--dur-base) var(--ease-out);
+}
+
+.valueRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.equals {
+  flex: none;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+.value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.value[data-size='xl'] {
+  font-size: 52px;
+}
+
+.value[data-size='lg'] {
+  font-size: 42px;
+}
+
+.value[data-size='md'] {
+  font-size: 32px;
+}
+
+.value[data-size='sm'] {
+  font-size: 24px;
+}
+
+.copy {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid var(--key-edge);
+  border-radius: var(--radius-md);
+  background: var(--key);
+  color: var(--text-2);
+  transition:
+    background var(--dur-fast),
+    color var(--dur-fast);
+}
+
+.copy:hover {
+  background: var(--key-hover);
+  color: var(--text);
+}
+
+/* Error */
+
+.error .expression {
+  font-size: 18px;
+  color: var(--text);
+}
+
+.mark {
+  padding: 1px 0;
+  border-radius: 3px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  text-decoration: underline wavy var(--danger);
+  text-underline-offset: 4px;
+}
+
+/* At the end of the expression there is no character to mark: show a cursor. */
+.mark[data-end] {
+  display: inline-block;
+  width: 9px;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  text-decoration: none;
+  border-bottom: 2px solid var(--danger);
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--danger);
+}
+
+.error[data-tone='hint'] .message {
+  color: var(--text-3);
+  font-weight: 400;
+}
+
+.error[data-tone='hint'] .mark {
+  background: transparent;
+  border-bottom-color: var(--text-3);
+}
+
+/* Idle */
+
+.idleTitle {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.idleBody {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.example {
+  padding: 5px 10px;
+  border: 1px solid var(--key-edge);
+  border-radius: 999px;
+  background: var(--key);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--key-op-text);
+  transition: background var(--dur-fast);
+}
+
+.example:hover {
+  background: var(--key-op);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}

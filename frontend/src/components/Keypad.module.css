@@ -1,0 +1,71 @@
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  padding: 4px 16px 16px;
+}
+
+.key {
+  display: grid;
+  place-items: center;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--key-edge);
+  border-radius: var(--radius-lg);
+  background: var(--key);
+  font-size: 17px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  touch-action: manipulation;
+  transition:
+    background var(--dur-fast),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.key:hover {
+  background: var(--key-hover);
+}
+
+.key:active {
+  transform: scale(0.95);
+}
+
+.key sup {
+  font-size: 0.65em;
+}
+
+.key[data-variant='operator'] {
+  background: var(--key-op);
+  border-color: transparent;
+  color: var(--key-op-text);
+  font-size: 19px;
+}
+
+.key[data-variant='operator']:hover {
+  background: var(--key-op-hover);
+}
+
+.key[data-variant='utility'] {
+  color: var(--text-2);
+}
+
+.key[data-variant='submit'] {
+  grid-column: span 2;
+  border: 0;
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  color: var(--on-accent);
+  font-size: 21px;
+  font-weight: 600;
+  box-shadow: 0 10px 22px -12px var(--accent);
+}
+
+.key[data-variant='submit']:hover {
+  filter: brightness(1.08);
+}
+
+@media (max-width: 720px) {
+  .key {
+    height: 50px;
+  }
+}

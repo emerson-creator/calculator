@@ -1,0 +1,90 @@
+/*
+ * Design tokens. Every colour, radius and shadow used by the components is
+ * defined here, once per colour scheme, so the look can be tuned in one place.
+ */
+:root {
+  color-scheme: light dark;
+
+  --font-sans: 'Figtree Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+
+  --radius-window: 18px;
+  --radius-lg: 12px;
+  --radius-md: 9px;
+  --radius-sm: 6px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+
+  /* Light scheme */
+  --page: #f1ecfb;
+  --blob-1: rgba(167, 139, 250, 0.55);
+  --blob-2: rgba(244, 114, 182, 0.4);
+  --blob-3: rgba(94, 234, 212, 0.35);
+
+  --window: rgba(255, 255, 255, 0.74);
+  --window-edge: rgba(76, 29, 149, 0.12);
+  --window-shadow: 0 40px 90px -30px rgba(76, 29, 149, 0.45), 0 12px 30px -18px rgba(76, 29, 149, 0.3);
+  --popover: rgba(255, 255, 255, 0.92);
+
+  --text: #1d1433;
+  --text-2: #5d5478;
+  --text-3: #8a82a3;
+
+  --hairline: rgba(55, 20, 120, 0.1);
+  --hover: rgba(109, 40, 217, 0.06);
+  --selected: rgba(109, 40, 217, 0.12);
+
+  --key: rgba(255, 255, 255, 0.8);
+  --key-edge: rgba(55, 20, 120, 0.1);
+  --key-hover: #ffffff;
+  --key-op: rgba(124, 58, 237, 0.1);
+  --key-op-hover: rgba(124, 58, 237, 0.17);
+  --key-op-text: #6d28d9;
+
+  --accent: #7c3aed;
+  --accent-2: #db2777;
+  --on-accent: #ffffff;
+  --focus: rgba(124, 58, 237, 0.55);
+
+  --danger: #c93a54;
+  --danger-bg: rgba(201, 58, 84, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0d0918;
+    --blob-1: rgba(109, 40, 217, 0.6);
+    --blob-2: rgba(190, 24, 93, 0.42);
+    --blob-3: rgba(14, 116, 144, 0.4);
+
+    --window: rgba(24, 18, 42, 0.72);
+    --window-edge: rgba(255, 255, 255, 0.1);
+    --window-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.8), 0 12px 30px -18px rgba(0, 0, 0, 0.6);
+    --popover: rgba(38, 30, 62, 0.94);
+
+    --text: #f4f1fb;
+    --text-2: #b6aecd;
+    --text-3: #8279a0;
+
+    --hairline: rgba(255, 255, 255, 0.08);
+    --hover: rgba(255, 255, 255, 0.05);
+    --selected: rgba(255, 255, 255, 0.1);
+
+    --key: rgba(255, 255, 255, 0.06);
+    --key-edge: rgba(255, 255, 255, 0.07);
+    --key-hover: rgba(255, 255, 255, 0.11);
+    --key-op: rgba(167, 139, 250, 0.16);
+    --key-op-hover: rgba(167, 139, 250, 0.26);
+    --key-op-text: #c9b8ff;
+
+    --accent: #a78bfa;
+    --accent-2: #f472b6;
+    --on-accent: #ffffff;
+    --focus: rgba(167, 139, 250, 0.7);
+
+    --danger: #ff8fa3;
+    --danger-bg: rgba(255, 143, 163, 0.12);
+  }
+}

@@ -1,0 +1,136 @@
+.window {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(880px, 100%);
+  border: 1px solid var(--window-edge);
+  border-radius: var(--radius-window);
+  background: var(--window);
+  -webkit-backdrop-filter: blur(40px) saturate(1.7);
+  backdrop-filter: blur(40px) saturate(1.7);
+  box-shadow: var(--window-shadow);
+  overflow: hidden;
+  animation: appear 420ms var(--ease-out);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+.history {
+  position: relative;
+  border-right: 1px solid var(--hairline);
+}
+
+/*
+ * The history takes the height of the detail column instead of growing with
+ * its own content: it is taken out of the flow and scrolls inside.
+ */
+.historyScroll {
+  position: absolute;
+  inset: 0;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 44px;
+  padding: 0 8px 0 16px;
+  border-top: 1px solid var(--hairline);
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.status {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-3);
+}
+
+.brandDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.footerButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  flex: none;
+  padding: 0 6px 0 10px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  transition: background var(--dur-fast);
+}
+
+.footerButton:hover,
+.footerButton[aria-expanded='true'] {
+  background: var(--hover);
+}
+
+.keys {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.divider {
+  width: 1px;
+  height: 14px;
+  margin: 0 4px;
+  background: var(--hairline);
+}
+
+@media (max-width: 720px) {
+  .window {
+    border-radius: 16px;
+  }
+
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* On small screens the result and keys come first, the history below. */
+  .history {
+    order: 2;
+    border-right: 0;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .historyScroll {
+    position: static;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+}
