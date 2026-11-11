@@ -34,6 +34,8 @@ const (
 	CodeDivisionByZero       = "DIVISION_BY_ZERO"
 	CodeNegativeSqrt         = "NEGATIVE_SQRT"
 	CodeResultOutOfRange     = "RESULT_OUT_OF_RANGE"
+	CodeSyntaxError          = "SYNTAX_ERROR"
+	CodeExpressionTooLong    = "EXPRESSION_TOO_LONG"
 	CodeMethodNotAllowed     = "METHOD_NOT_ALLOWED"
 	CodeNotFound             = "NOT_FOUND"
 	CodeInternal             = "INTERNAL_ERROR"
@@ -74,6 +76,9 @@ type errorResponse struct {
 type errorBody struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
+	// Position is the zero-based character offset of a syntax error within
+	// the submitted expression. It is only present for SYNTAX_ERROR.
+	Position *int `json:"position,omitempty"`
 }
 
 // Handler holds the HTTP handlers of the API and their dependencies.

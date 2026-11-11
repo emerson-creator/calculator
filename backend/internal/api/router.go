@@ -19,7 +19,8 @@ type Config struct {
 //
 //	GET  /healthz              liveness probe
 //	GET  /api/v1/operations    list supported operations
-//	POST /api/v1/calculate     perform a calculation
+//	POST /api/v1/calculate     perform a single operation
+//	POST /api/v1/evaluate      evaluate a full expression
 func NewRouter(logger *slog.Logger, cfg Config) http.Handler {
 	h := NewHandler(logger)
 
@@ -27,6 +28,7 @@ func NewRouter(logger *slog.Logger, cfg Config) http.Handler {
 	mux.Handle("/healthz", h.method(http.MethodGet, h.Health))
 	mux.Handle("/api/v1/operations", h.method(http.MethodGet, h.Operations))
 	mux.Handle("/api/v1/calculate", h.method(http.MethodPost, h.Calculate))
+	mux.Handle("/api/v1/evaluate", h.method(http.MethodPost, h.Evaluate))
 	mux.HandleFunc("/", h.NotFound)
 
 	// Outermost first: Logging sees the final status, including the 500

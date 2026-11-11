@@ -126,7 +126,7 @@ Content-Type: application/json
 POST {{api}}/calculate
 Content-Type: application/json
 
-{ "operation": "add", "a": 2, }
+{ "operation": "add", "a": 2,}
 
 
 ############################################################
@@ -150,3 +150,86 @@ OPTIONS {{api}}/calculate
 Origin: http://localhost:5173
 Access-Control-Request-Method: POST
 Access-Control-Request-Headers: content-type
+
+
+############################################################
+# Expressions -> POST /evaluate
+############################################################
+
+### Operator precedence -> 14
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "2 + 3 * 4" }
+
+### Parentheses -> 20
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "(2 + 3) * 4" }
+
+### Everything together -> 98
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "2 * (3 + 4) ^ 2" }
+
+### Power is right-associative -> 512
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "2 ^ 3 ^ 2" }
+
+### Power binds tighter than unary minus -> -4
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "-2 ^ 2" }
+
+### Percent (x% = x / 100) -> 170
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "200 - 200 * 15%" }
+
+### Square root -> 5
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "sqrt(9 + 16)" }
+
+### Division by zero in a subexpression -> 422 DIVISION_BY_ZERO
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "10 / (5 - 5)" }
+
+### Unclosed parenthesis -> 400 SYNTAX_ERROR, position 6
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "(2 + 3" }
+
+### Trailing operator -> 400 SYNTAX_ERROR, position 3
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "2 +" }
+
+### Invalid character -> 400 SYNTAX_ERROR, position 2
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "2 $ 3" }
+
+### Implicit multiplication is not supported -> 400 SYNTAX_ERROR, position 1
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{ "expression": "2(3)" }
+
+### Missing expression field -> 400 INVALID_REQUEST
+POST {{api}}/evaluate
+Content-Type: application/json
+
+{}
