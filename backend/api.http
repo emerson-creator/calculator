@@ -1,0 +1,152 @@
+### Calculator API — manual requests
+### Requires the "REST Client" extension for VS Code.
+### Start the server first:  cd backend && go run ./cmd/server
+### Then click "Send Request" above any request.
+
+@baseUrl = http://localhost:8080
+@api = {{baseUrl}}/api/v1
+
+
+############################################################
+# Service
+############################################################
+
+### Health check -> 200 {"status":"ok"}
+GET {{baseUrl}}/healthz
+
+### List supported operations -> 200
+GET {{api}}/operations
+
+
+############################################################
+# Successful calculations -> 200
+############################################################
+
+### Add -> 5
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "add", "a": 2, "b": 3 }
+
+### Subtract -> -6
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "subtract", "a": 4, "b": 10 }
+
+### Multiply -> 3.75
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "multiply", "a": 1.5, "b": 2.5 }
+
+### Divide -> 2.5
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "divide", "a": 10, "b": 4 }
+
+### Power -> 1024
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "power", "a": 2, "b": 10 }
+
+### Square root (only needs "a") -> 9
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "sqrt", "a": 81 }
+
+### Percentage: a% of b -> 20
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "percentage", "a": 10, "b": 200 }
+
+
+############################################################
+# Math errors -> 422
+############################################################
+
+### Division by zero -> 422 DIVISION_BY_ZERO
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "divide", "a": 10, "b": 0 }
+
+### Square root of a negative number -> 422 NEGATIVE_SQRT
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "sqrt", "a": -9 }
+
+### Overflow -> 422 RESULT_OUT_OF_RANGE
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "power", "a": 10, "b": 400 }
+
+
+############################################################
+# Invalid requests -> 400
+############################################################
+
+### Unknown operation -> 400 UNKNOWN_OPERATION
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "modulo", "a": 10, "b": 3 }
+
+### Missing operand "b" -> 400 MISSING_OPERAND
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "add", "a": 2 }
+
+### Missing operation -> 400 INVALID_REQUEST
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "a": 2, "b": 3 }
+
+### Operand sent as a string -> 400 INVALID_REQUEST
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "add", "a": "2", "b": 3 }
+
+### Unknown field -> 400 INVALID_REQUEST
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "add", "a": 2, "b": 3, "c": 4 }
+
+### Malformed JSON -> 400 INVALID_REQUEST
+POST {{api}}/calculate
+Content-Type: application/json
+
+{ "operation": "add", "a": 2, }
+
+
+############################################################
+# Protocol errors
+############################################################
+
+### Wrong Content-Type -> 415 UNSUPPORTED_MEDIA_TYPE
+POST {{api}}/calculate
+Content-Type: text/plain
+
+{ "operation": "add", "a": 2, "b": 3 }
+
+### Wrong method -> 405 METHOD_NOT_ALLOWED
+GET {{api}}/calculate
+
+### Unknown route -> 404 NOT_FOUND
+GET {{api}}/unknown
+
+### CORS preflight from the Vite dev server -> 204 with Access-Control-* headers
+OPTIONS {{api}}/calculate
+Origin: http://localhost:5173
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: content-type
